@@ -1,4 +1,5 @@
 package pl.janda.microblogging.config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import pl.janda.microblogging.service.UserDetailsServiceImpl;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -43,10 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 */
+    @Autowired
+    UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -57,9 +61,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/home").permitAll()
                 .antMatchers("/console").anonymous()
-                .antMatchers(HttpMethod.GET, "/app").permitAll()
-                .antMatchers(HttpMethod.POST, "/app").hasRole("MOD")
-                .antMatchers(HttpMethod.DELETE, "/app").hasRole("ADMIN")
+                //.antMatchers(HttpMethod.GET, "/app").permitAll()
+                //.antMatchers(HttpMethod.POST, "/app").hasRole("MOD")
+                //.antMatchers(HttpMethod.DELETE, "/app").hasRole("ADMIN")
+                .antMatchers("/welcome", "/me/**").authenticated()
+                .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
+                //.antMatchers("/admin").hasRole("ADMIN")
                 //.anyRequest().hasRole("ADMIN")
                 .and()
                 .formLogin()

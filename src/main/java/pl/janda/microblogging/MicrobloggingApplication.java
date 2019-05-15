@@ -4,16 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.janda.microblogging.model.Post;
+import pl.janda.microblogging.model.Role;
 import pl.janda.microblogging.model.User;
 import pl.janda.microblogging.repository.PostRepository;
+import pl.janda.microblogging.repository.RoleRepository;
 import pl.janda.microblogging.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,15 +34,33 @@ public class MicrobloggingApplication implements CommandLineRunner {
     PostRepository postRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
+        Role roleUser = new Role("ROLE_USER");
+        Role roleAdmin = new Role("ROLE_ADMIN");
+        roleRepository.save(roleUser);
+        roleRepository.save(roleAdmin);
+
         User user1 = new User();
         user1.setUsername("user1");
         user1.setPassword(passwordEncoder.encode("pass"));
         user1.setSince(LocalDateTime.now());
+        user1.setRole(roleUser);
+        System.out.println(user1.getAuthorities());
         userRepository.save(user1);
+
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setSince(LocalDateTime.now());
+        admin.setRole(roleAdmin);
+        System.out.println(admin.getAuthorities());
+        userRepository.save(admin);
 
         Post post1 = new Post();
         post1.setContent("content1");
@@ -64,10 +85,10 @@ public class MicrobloggingApplication implements CommandLineRunner {
         userRepository.save(user1);
 
         Optional<User> opt = userRepository.findUserByPosts(post1);
-        User u = new User();
+        User u;
         if(opt.isPresent()){
             u = opt.get();
-            System.out.println(u.getUsername());
+            //System.out.println(u.getUsername());
         }
 
         Optional<List<Post>> optionalPostList = postRepository.findAllByUser(user1);

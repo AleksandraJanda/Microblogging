@@ -1,6 +1,8 @@
 package pl.janda.microblogging.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -9,13 +11,16 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String password;
     private LocalDateTime since;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -24,10 +29,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, LocalDateTime since, List<Post> posts) {
+    public User(String username, String password, LocalDateTime since, Role role, List<Post> posts) {
         this.username = username;
         this.password = password;
         this.since = since;
+        this.role = role;
         this.posts = posts;
     }
 
@@ -71,20 +77,18 @@ public class User {
         this.posts = posts;
     }
 
-    /*
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
+        return AuthorityUtils
+                .commaSeparatedStringToAuthorityList("ROLE_USER");
     }
 
     @Override
@@ -105,5 +109,5 @@ public class User {
     @Override
     public boolean isEnabled() {
         return true;
-    }*/
+    }
 }

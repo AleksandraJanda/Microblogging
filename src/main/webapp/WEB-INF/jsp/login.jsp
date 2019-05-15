@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 
 <html>
@@ -56,7 +57,10 @@
         </form>
     </div>
     <div class="container" id="content">
-        <form>
+
+
+
+        <form action="/login" method="post">
             <label class="label">
                 Username:
             </label>
