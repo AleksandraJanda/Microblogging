@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 
 <html>
@@ -15,11 +17,8 @@
         <span></span>
         <span></span>
         <ul id="menu">
-            <a href="/home">
+            <a href="/">
                 <li>Home</li>
-            </a>
-            <a href="/welcome">
-                <li>Welcome</li>
             </a>
             <a href="/me">
                 <li>My Profile</li>
@@ -39,10 +38,15 @@
         Microblogging
     </div>
     <div class="top-item" id="panel">
-        <a href="/login">Login</a>
-        <a href="/logout">Logout</a>
-        <a href="/sign">Sign In</a>
-        <label>Zalogowano:</label>
+        <security:authorize access="!isAuthenticated()">
+            <a href="/login">Login</a>
+            <a href="/sign">Sign In</a>
+            <label>Not logged</label>
+        </security:authorize>
+        <security:authorize access="isAuthenticated()">
+            <a href="/logout">Logout</a>
+            <label>Logged user: ${username}</label>
+        </security:authorize>
     </div>
 </div>
 <div id="page">
@@ -59,20 +63,24 @@
     <div class="container" id="content">
         <div class="pane" id="left-pane">
             <div id="image">
-                <img src="user.png" alt="user">
+                <img src="../../resources/images/user.png" alt="user">
             </div>
             <div id="user-data">
-                <label class="label">Username</label>
-                <label class="label">since Date</label>
-                <label class="label">Posts [number]</label>
+                <label class="label">${username}</label>
+                <label class="label">since: ${since}</label>
+                <label class="label">posts: ${postsNumber}</label>
             </div>
         </div>
         <div class="pane" id="right-pane">
             <div id="add-post">
-                <textarea id="new-post" name="post" rows="5" form="form-add-post" maxlength="200"></textarea>
-                <form id="form-add-post">
+                <form:form action="/me" method="post" modelAttribute="new-post">
+                    <form:textarea id="new-post" path="content" rows="5"/>
                     <input class="button" type="submit" value="Post">
-                </form>
+                </form:form>
+                <!--<textarea id="new-post" name="post" rows="5" form="form-add-post" maxlength="200"></textarea>
+                <form id="form-add-post" action="/me" method="post">
+                    <input class="button" type="submit" value="Post">
+                </form>-->
             </div>
             <div id="my-posts">
                 my posts

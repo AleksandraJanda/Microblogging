@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="../../resources/css/styles.jsp"%>
+<%@ include file="css/styles.jsp"%>
 
 <html>
 <head>
@@ -15,11 +15,8 @@
         <span></span>
         <span></span>
         <ul id="menu">
-            <a href="/home">
+            <a href="/">
                 <li>Home</li>
-            </a>
-            <a href="/welcome">
-                <li>Welcome</li>
             </a>
             <a href="/me">
                 <li>My Profile</li>
@@ -42,7 +39,7 @@
         <a href="/login">Login</a>
         <a href="/logout">Logout</a>
         <a href="/sign">Sign In</a>
-        <label>Zalogowano:</label>
+        <label>Zalogowano: ${username}</label>
     </div>
 </div>
 <div id="page">
@@ -57,6 +54,7 @@
         </form>
     </div>
     <div class="container" id="content">
+        <!--
         <div id="header">
             Recently added posts:
         </div>
@@ -157,7 +155,7 @@
                     <div class="likes">Likes</div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

@@ -16,11 +16,8 @@
         <span></span>
         <span></span>
         <ul id="menu">
-            <a href="/home">
+            <a href="/">
                 <li>Home</li>
-            </a>
-            <a href="/welcome">
-                <li>Welcome</li>
             </a>
             <a href="/me">
                 <li>My Profile</li>
@@ -41,8 +38,8 @@
     </div>
     <div class="top-item" id="panel">
         <a href="/login">Login</a>
-        <a href="/logout">Logout</a>
         <a href="/sign">Sign In</a>
+        <label>Not logged</label>
     </div>
 </div>
 <div id="page">
@@ -57,21 +54,16 @@
         </form>
     </div>
     <div class="container" id="content">
-
-
-
-        <form action="/login" method="post">
-            <label class="label">
-                Username:
-            </label>
-            <input id="username" type="text" name="username" />${username}
-            <label class="label">
-                Password:
-            </label>
-            <input id="password" type="password" name="password" />${password}
-            <label class="label"></label>
+        <form:form action="/login" method="post" modelAttribute="user">
+            <form:label path="username">Username:</form:label>
+            <form:input path="username"/>
+            <br>
+            <form:label path="password">Password:</form:label>
+            <form:password path="password"/>
+            <br>
             <input id="submit" type="submit" value="Login" />
-        </form>
+        </form:form>
+
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

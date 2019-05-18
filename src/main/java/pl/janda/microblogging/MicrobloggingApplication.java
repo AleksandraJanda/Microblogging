@@ -92,6 +92,6 @@ public class MicrobloggingApplication implements CommandLineRunner {
         }
 
         Optional<List<Post>> optionalPostList = postRepository.findAllByUser(user1);
-        //optionalPostList.ifPresent(posts -> System.out.println(posts.size()));
+        optionalPostList.ifPresent(posts -> System.out.println(posts.size()));
     }
 }

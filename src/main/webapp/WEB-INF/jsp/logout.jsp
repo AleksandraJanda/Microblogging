@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 
 <html>
@@ -17,9 +18,6 @@
         <ul id="menu">
             <a href="/home">
                 <li>Home</li>
-            </a>
-            <a href="/welcome">
-                <li>Welcome</li>
             </a>
             <a href="/me">
                 <li>My Profile</li>
@@ -40,8 +38,8 @@
     </div>
     <div class="top-item" id="panel">
         <a href="/login">Login</a>
-        <a href="/logout">Logout</a>
         <a href="/sign">Sign In</a>
+        <label>Not logged</label>
     </div>
 </div>
 <div id="page">

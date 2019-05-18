@@ -11,11 +11,13 @@ import java.util.Optional;
 
 @Controller
 public class LoginController {
+
+
 /*
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("/login")
+    @GetMapping("/login/")
     String lloog(Model model) {
         model.addAttribute("user", new User());
         return "login";
@@ -34,6 +36,6 @@ public class LoginController {
                 return "welcome";
             }
         }
-        return "login";
+        return "welcome";
     }*/
 }
