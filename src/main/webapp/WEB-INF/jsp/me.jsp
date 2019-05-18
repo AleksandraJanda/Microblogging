@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="../../resources/css/styles.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../../resources/css/styles.jsp" %>
 
 <html>
 <head>
@@ -12,7 +13,7 @@
 <body>
 <div id="top">
     <div class="top-item" id="nav">
-        <input type="checkbox" />
+        <input type="checkbox"/>
         <span></span>
         <span></span>
         <span></span>
@@ -74,16 +75,23 @@
         <div class="pane" id="right-pane">
             <div id="add-post">
                 <form:form action="/me" method="post" modelAttribute="new-post">
-                    <form:textarea id="new-post" path="content" rows="5"/>
+                    <textarea id="new-post" name="content" rows="5" maxlength="200" required></textarea>
                     <input class="button" type="submit" value="Post">
                 </form:form>
-                <!--<textarea id="new-post" name="post" rows="5" form="form-add-post" maxlength="200"></textarea>
-                <form id="form-add-post" action="/me" method="post">
-                    <input class="button" type="submit" value="Post">
-                </form>-->
             </div>
             <div id="my-posts">
-                my posts
+                <c:forEach items="${posts}" var="post">
+                    <div class="post">
+                        <div class="post-header">
+                            <div class="post-header-item">${post.user.username}</div>
+                            <div class="post-header-item">${post.dateTime}</div>
+                        </div>
+                        <div class="post-content">
+                                ${post.content} </div>
+                        <div class="likes">Likes</div>
+                    </div>
+                </c:forEach>
+
             </div>
         </div>
     </div>

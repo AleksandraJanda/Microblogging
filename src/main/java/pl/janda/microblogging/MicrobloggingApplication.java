@@ -63,7 +63,7 @@ public class MicrobloggingApplication implements CommandLineRunner {
         userRepository.save(admin);
 
         Post post1 = new Post();
-        post1.setContent("content1");
+        post1.setContent("Life is pure fun!");
         post1.setDateTime(LocalDateTime.now());
         post1.setUser(user1);
         postRepository.save(post1);
@@ -75,7 +75,7 @@ public class MicrobloggingApplication implements CommandLineRunner {
         userRepository.save(user1);
 
         Post post2 = new Post();
-        post2.setContent("content2");
+        post2.setContent("What about party tonight?");
         post2.setDateTime(LocalDateTime.now());
         post2.setUser(user1);
         postRepository.save(post2);

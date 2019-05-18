@@ -16,14 +16,10 @@ public class PostsService {
     @Autowired
     PostRepository postRepository;
 
-    public void savePost(String content, User user){
-        Post post = new Post();
+    public void savePost(Post post, User user){
         post.setUser(user);
         post.setDateTime(LocalDateTime.now());
-        post.setContent(content);
-
         postRepository.save(post);
-        System.out.println("saved");
     }
 
     public List<Post> findPosts(User user){

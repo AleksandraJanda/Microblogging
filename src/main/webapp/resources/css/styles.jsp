@@ -205,7 +205,7 @@
         }
 
         #search {
-            float: inline-start;
+            float: start;
             text-align: center;
         }
 
@@ -227,7 +227,7 @@
         }
 
         #content {
-            float: inline-start;
+            float: start;
             padding-top: 15px;
             text-align: center;
             margin-bottom: 15px;
@@ -255,7 +255,7 @@
             width: 32.5%;
             margin-bottom: 5px;
             padding: 5px;
-            border: 1px solid rgb(255, 111, 15, 0.5);
+            border: 1px solid rgba(255, 111, 15, 0.5);
             border-radius: 5px;
         }
 

@@ -62,9 +62,9 @@ public class MainController {
         User user = (User) userDetailsService.loadUserByUsername(username);
         LocalDateTime since = user.getSince();
         List<Post> posts = user.getPosts();
-
         Integer postsNumber = posts.size();
 
+        model.addAttribute("posts", posts);
         model.addAttribute("username", username);
         model.addAttribute("since", since.toLocalDate());
         model.addAttribute("postsNumber", postsNumber);
@@ -79,14 +79,13 @@ public class MainController {
 
         User user = (User) userDetailsService.loadUserByUsername(username);
         LocalDateTime since = user.getSince();
+
+        postsService.savePost(post, user);
+
         List<Post> posts = postsService.findPosts(user);
-
         Integer postsNumber = posts.size();
-        System.out.println(post.getContent());
-        System.out.println(postsNumber);
 
-        postsService.savePost(post.getContent(), user);
-        //model.addAttribute("content", post.getContent());
+        model.addAttribute("posts", posts);
         model.addAttribute("username", username);
         model.addAttribute("since", since.toLocalDate());
         model.addAttribute("postsNumber", postsNumber);
