@@ -51,7 +51,7 @@ public class MicrobloggingApplication implements CommandLineRunner {
         user1.setPassword(passwordEncoder.encode("pass"));
         user1.setSince(LocalDateTime.now());
         user1.setRole(roleUser);
-        System.out.println(user1.getAuthorities());
+        //System.out.println(user1.getAuthorities());
         userRepository.save(user1);
 
         User admin = new User();
@@ -59,7 +59,7 @@ public class MicrobloggingApplication implements CommandLineRunner {
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setSince(LocalDateTime.now());
         admin.setRole(roleAdmin);
-        System.out.println(admin.getAuthorities());
+        //System.out.println(admin.getAuthorities());
         userRepository.save(admin);
 
         Post post1 = new Post();
@@ -92,6 +92,6 @@ public class MicrobloggingApplication implements CommandLineRunner {
         }
 
         Optional<List<Post>> optionalPostList = postRepository.findAllByUser(user1);
-        optionalPostList.ifPresent(posts -> System.out.println(posts.size()));
+        //optionalPostList.ifPresent(posts -> System.out.println(posts.size()));
     }
 }

@@ -1,7 +1,10 @@
 package pl.janda.microblogging.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 
+@Proxy(lazy=false)
 @Entity
 @Table(name = "roles")
 public class Role {
@@ -32,5 +35,13 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package pl.janda.microblogging.model;
 
+import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Proxy(lazy=false)
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -87,8 +89,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils
-                .commaSeparatedStringToAuthorityList("ROLE_USER");
+        return AuthorityUtils.commaSeparatedStringToAuthorityList(role.getName());
     }
 
     @Override
@@ -109,5 +110,14 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", since=" + since +
+                '}';
     }
 }

@@ -1,10 +1,13 @@
 package pl.janda.microblogging.model;
 
+import org.hibernate.annotations.Proxy;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+@Proxy(lazy=false)
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -61,5 +64,15 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", dateTime=" + dateTime +
+                ", user=" + user.getUsername() +
+                '}';
     }
 }

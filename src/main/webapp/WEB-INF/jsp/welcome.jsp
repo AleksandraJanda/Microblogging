@@ -42,7 +42,7 @@
         <a href="/login">Login</a>
         <a href="/logout">Logout</a>
         <a href="/sign">Sign In</a>
-        <p>Zalogowano:</p>
+        <label>Zalogowano:</label>
     </div>
 </div>
 <div id="page">
