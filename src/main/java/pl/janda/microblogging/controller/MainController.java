@@ -1,19 +1,16 @@
 package pl.janda.microblogging.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import pl.janda.microblogging.model.Post;
 import pl.janda.microblogging.model.User;
 import pl.janda.microblogging.service.PostsService;
 import pl.janda.microblogging.service.UserDetailsServiceImpl;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -29,12 +26,17 @@ public class MainController {
     @GetMapping("/")
     String home(Model model) {
         addUsernameAttribute(model);
+        if(!userDetailsService.username().equals("anonymousUser")) {
+            List<Post> posts = postsService.getAllPostsFromWeek();
+            posts.sort(Comparator.comparing(Post::getDateTime).reversed());
+            model.addAttribute("posts", posts);
+        }
         return "home";
     }
 
     @GetMapping("/home")
-    String home2() {
-        return "home";
+    String home2(Model model) {
+        return home(model);
     }
 
    @GetMapping("/login")
@@ -61,17 +63,13 @@ public class MainController {
 
         User user = (User) userDetailsService.loadUserByUsername(username);
         LocalDateTime since = user.getSince();
-        List<Post> posts = user.getPosts();
-        Integer postsNumber = posts.size();
 
-        model.addAttribute("posts", posts);
-        model.addAttribute("username", username);
-        model.addAttribute("since", since.toLocalDate());
-        model.addAttribute("postsNumber", postsNumber);
+        postsAndAttributes(model, username, user, since);
         model.addAttribute("new-post", new Post());
 
         return "me";
     }
+
 
     @PostMapping("/me")
     String post(Model model, @ModelAttribute("new-post") Post post){
@@ -81,16 +79,26 @@ public class MainController {
         LocalDateTime since = user.getSince();
 
         postsService.savePost(post, user);
+        userDetailsService.saveUserWithPosts(post, user);
 
+        postsAndAttributes(model, username, user, since);
+
+        return "me";
+    }
+
+    private void postsAndAttributes(Model model, String username, User user, LocalDateTime since) {
         List<Post> posts = postsService.findPosts(user);
-        Integer postsNumber = posts.size();
+        int postsNumber = 0;
+
+        if(posts!=null) {
+            posts.sort(Comparator.comparing(Post::getDateTime).reversed());
+            postsNumber = posts.size();
+        }
 
         model.addAttribute("posts", posts);
         model.addAttribute("username", username);
         model.addAttribute("since", since.toLocalDate());
         model.addAttribute("postsNumber", postsNumber);
-
-        return "me";
     }
 
     @GetMapping("/admin")
@@ -101,5 +109,10 @@ public class MainController {
 
     private void addUsernameAttribute(Model model){
         model.addAttribute("username", userDetailsService.username());
+    }
+
+    @GetMapping("/error")
+    String error(){
+        return "error";
     }
 }

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 <html>
 <head>
@@ -9,7 +8,7 @@
         <title>Home</title>
     </security:authorize>
     <security:authorize access="isAuthenticated()">
-        <title>Welcome</title>
+        <title>Error</title>
     </security:authorize>
 </head>
 
@@ -65,32 +64,7 @@
         </form>
     </div>
     <div class="container" id="content">
-        <security:authorize access="!isAuthenticated()">
-            <a href="/login">Login</a>
-            or
-            <a href="/sign">Sign In</a>
-            to see posts.
-        </security:authorize>
-        <security:authorize access="isAuthenticated()">
-            <div id="header">
-                Recently added posts:
-            </div>
-            <div id="posts-container">
-                <c:forEach items="${posts}" var="post">
-                    <div class="post">
-                        <div class="post-header">
-                            <div class="post-header-item">${post.user.username}</div>
-                            <div class="post-header-item">${post.dateTime.toLocalDate()},
-                                    ${post.dateTime.toLocalTime().getHour()}:${post.dateTime.toLocalTime().getMinute()}
-                            </div>
-                        </div>
-                        <div class="post-content">
-                                ${post.content} </div>
-                        <div class="likes">Likes</div>
-                    </div>
-                </c:forEach>
-            </div>
-        </security:authorize>
+        Error: user has no access to Admin Panel
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

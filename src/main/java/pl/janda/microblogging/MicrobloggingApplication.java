@@ -46,26 +46,13 @@ public class MicrobloggingApplication implements CommandLineRunner {
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);
 
-        User user1 = new User();
-        user1.setUsername("user1");
-        user1.setPassword(passwordEncoder.encode("pass"));
-        user1.setSince(LocalDateTime.now());
-        user1.setRole(roleUser);
-        //System.out.println(user1.getAuthorities());
+        User user1 = new User("user1",passwordEncoder.encode("pass"),LocalDateTime.now(),roleUser);
         userRepository.save(user1);
 
-        User admin = new User();
-        admin.setUsername("admin");
-        admin.setPassword(passwordEncoder.encode("admin"));
-        admin.setSince(LocalDateTime.now());
-        admin.setRole(roleAdmin);
-        //System.out.println(admin.getAuthorities());
+        User admin = new User("admin",passwordEncoder.encode("admin"),LocalDateTime.now(),roleAdmin);
         userRepository.save(admin);
 
-        Post post1 = new Post();
-        post1.setContent("Life is pure fun!");
-        post1.setDateTime(LocalDateTime.now());
-        post1.setUser(user1);
+        Post post1 = new Post("Life is pure fun!",LocalDateTime.now().minusDays(10),user1);
         postRepository.save(post1);
 
         List<Post> list = new ArrayList<>();
@@ -74,24 +61,11 @@ public class MicrobloggingApplication implements CommandLineRunner {
         user1.setPosts(list);
         userRepository.save(user1);
 
-        Post post2 = new Post();
-        post2.setContent("What about party tonight?");
-        post2.setDateTime(LocalDateTime.now());
-        post2.setUser(user1);
+        Post post2 = new Post("What about party tonight?",LocalDateTime.now(),user1);
         postRepository.save(post2);
 
         list.add(post2);
         user1.setPosts(list);
         userRepository.save(user1);
-
-        Optional<User> opt = userRepository.findUserByPosts(post1);
-        User u;
-        if(opt.isPresent()){
-            u = opt.get();
-            //System.out.println(u.getUsername());
-        }
-
-        Optional<List<Post>> optionalPostList = postRepository.findAllByUser(user1);
-        optionalPostList.ifPresent(posts -> System.out.println(posts.size()));
     }
 }

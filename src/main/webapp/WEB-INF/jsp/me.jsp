@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../../resources/css/styles.jsp" %>
 
 <html>
@@ -76,22 +76,28 @@
             <div id="add-post">
                 <form:form action="/me" method="post" modelAttribute="new-post">
                     <textarea id="new-post" name="content" rows="5" maxlength="200" required></textarea>
-                    <input class="button" type="submit" value="Post">
+                    <input class="button" type="submit" value="Add Post">
                 </form:form>
             </div>
             <div id="my-posts">
-                <c:forEach items="${posts}" var="post">
-                    <div class="post">
-                        <div class="post-header">
-                            <div class="post-header-item">${post.user.username}</div>
-                            <div class="post-header-item">${post.dateTime}</div>
+                <c:if test="${posts==null}">
+                    No posts yet
+                </c:if>
+                <c:if test="${posts!=null}">
+                    <c:forEach items="${posts}" var="post">
+                        <div class="post">
+                            <div class="post-header">
+                                <div class="post-header-item">${post.user.username}</div>
+                                <div class="post-header-item">${post.dateTime.toLocalDate()},
+                                        ${post.dateTime.toLocalTime().getHour()}:${post.dateTime.toLocalTime().getMinute()}
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                    ${post.content} </div>
+                            <div class="likes">Likes</div>
                         </div>
-                        <div class="post-content">
-                                ${post.content} </div>
-                        <div class="likes">Likes</div>
-                    </div>
-                </c:forEach>
-
+                    </c:forEach>
+                </c:if>
             </div>
         </div>
     </div>

@@ -3,7 +3,6 @@ package pl.janda.microblogging.model;
 import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -29,6 +28,13 @@ public class User implements UserDetails {
     private List<Post> posts = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(String username, String password, LocalDateTime since, Role role) {
+        this.username = username;
+        this.password = password;
+        this.since = since;
+        this.role = role;
     }
 
     public User(String username, String password, LocalDateTime since, Role role, List<Post> posts) {
