@@ -52,18 +52,18 @@
             border-radius: 3px;
             position: relative;
             z-index: 1;
-            transform-origin: 4px 0px;
+            transform-origin: 4px 0;
             transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
             background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
             opacity 0.55s ease;
         }
 
         #nav span:first-child {
-            transform-origin: 0% 0%;
+            transform-origin: 0 0;
         }
 
         #nav span:nth-last-child(2) {
-            transform-origin: 0% 100%;
+            transform-origin: 0 100%;
         }
 
         /* Transform all the slices of hamburger into a crossmark. */
@@ -102,7 +102,7 @@
             list-style-type: none;
             -webkit-font-smoothing: antialiased;
             /* to stop flickering of text in safari */
-            transform-origin: 0% 0%;
+            transform-origin: 0 0;
             transform: translate(-100%, 0);
             transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
         }
@@ -131,8 +131,8 @@
 
         #top {
             position: fixed;
-            top: 0px;
-            left: 0px;
+            top: 0;
+            left: 0;
             padding: 10px;
             width: 100%;
             color: white;
@@ -160,8 +160,8 @@
 
         #footer {
             position: fixed;
-            bottom: 0px;
-            left: 0px;
+            bottom: 0;
+            left: 0;
             font-size: 10px;
             padding: 5px;
             height: 20px;
@@ -188,11 +188,11 @@
         #page {
             display: block;
             position: relative;
-            top: 40px;
-            left: 0px;
-            right: 0px;
-            bottom: 0px;
-            margin: 0px;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0;
             width: 100%;
             border: none;
 
@@ -281,13 +281,13 @@
         }
 
         /* login */
-        .label, #username, #password, #submit, #email{
+        .label, #username, #password, #submit, #email, #passwordConfirm{
             display: block;
             margin: 7px;
             font-size: 16px;
         }
 
-        #username, #password, #email {
+        #username, #password, #email, #passwordConfirm {
             display: inline;
             border: none;
             padding: 5px;
@@ -321,7 +321,7 @@
 
         #right-pane {
             float: left;
-            width: 71%;
+            width: 70.7%;
         }
 
         #image {
@@ -393,6 +393,12 @@
 
             #add-post, #my-posts {
                 width: 100%;
+            }
+        }
+        @media screen and (max-width:400px) {
+            #panel {
+                width: 100%;
+                float: right;
             }
         }
     </style>

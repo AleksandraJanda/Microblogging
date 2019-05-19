@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 
 <html>
@@ -63,7 +64,9 @@
             <br>
             <input id="submit" type="submit" value="Login" />
         </form:form>
-
+        <c:if test="${param.error != null}">
+            <label class="label">Invalid username or password</label>
+        </c:if>
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

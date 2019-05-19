@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import pl.janda.microblogging.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -35,16 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/sign").permitAll()
                 .antMatchers("/console").anonymous()
-                //.antMatchers(HttpMethod.GET, "/app").permitAll()
-                //.antMatchers(HttpMethod.POST, "/app").hasRole("MOD")
-                //.antMatchers(HttpMethod.DELETE, "/app").hasRole("ADMIN")
                 .antMatchers("/me/**").authenticated()
                 .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
-                //.antMatchers("/admin").hasRole("ADMIN")
-                //.anyRequest().hasRole("ADMIN")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/", true)
                 .and()
                 .logout()
                 .logoutUrl("/logout").permitAll()

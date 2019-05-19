@@ -64,7 +64,7 @@
         </form>
     </div>
     <div class="container" id="content">
-        Error: user has no access to Admin Panel
+        Error: please return to home page.
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

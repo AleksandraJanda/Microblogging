@@ -1,5 +1,6 @@
 package pl.janda.microblogging.model;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.hibernate.annotations.Proxy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -20,6 +21,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private LocalDateTime since;
+    private String passwordConfirm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
@@ -136,5 +138,13 @@ public class User implements UserDetails {
                 ", username='" + username + '\'' +
                 ", since=" + since +
                 '}';
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

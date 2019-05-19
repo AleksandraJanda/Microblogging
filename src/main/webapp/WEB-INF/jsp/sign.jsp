@@ -71,8 +71,12 @@
             <form:label class="label" path="password">Password:</form:label>
             <form:password path="password"/>
             <br>
+            <form:label class="label" path="password">Password confirmation:</form:label>
+            <form:password path="passwordConfirm"/>
+            <br>
             <input id="submit" type="submit" value="Sign In" />
         </form:form>
+        <label class="label">${info}</label>
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>
