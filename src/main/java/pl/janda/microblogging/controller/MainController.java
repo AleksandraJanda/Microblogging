@@ -124,6 +124,13 @@ public class MainController {
     @GetMapping("/admin")
     String admin(Model model) {
         addUsernameAttribute(model);
+        List<User> users = userDetailsService.getAllUsers();
+        model.addAttribute("numberOfUsers",users.size());
+        List<Post> posts = postsService.getAllPosts();
+        model.addAttribute("numberOfPosts",posts.size());
+        model.addAttribute("users",users);
+        model.addAttribute("posts",posts);
+
         return "admin";
     }
 

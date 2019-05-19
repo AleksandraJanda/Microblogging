@@ -24,9 +24,6 @@ public class PostsService {
         post.setUser(user);
         post.setDateTime(LocalDateTime.now());
         postRepository.save(post);
-        if(LocalDateTime.now().toLocalTime().getHour()<10){
-
-        }
     }
 
     public List<Post> findPosts(User user){
@@ -37,5 +34,9 @@ public class PostsService {
     public List<Post> getAllPostsFromWeek(){
         Optional<List<Post>> find = postRepository.findPostsByDateTimeBetween(LocalDateTime.now().minusDays(30),LocalDateTime.now());
         return find.orElse(null);
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAll();
     }
 }

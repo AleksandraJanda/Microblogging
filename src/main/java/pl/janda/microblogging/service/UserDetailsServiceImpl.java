@@ -62,4 +62,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         user.setSince(LocalDateTime.now());
         userRepository.save(user);
     }
+
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
 }

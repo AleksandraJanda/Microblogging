@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ include file="../../resources/css/styles.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="../../resources/css/styles.jsp" %>
 
 <html>
 <head>
@@ -11,7 +12,7 @@
 <body>
 <div id="top">
     <div class="top-item" id="nav">
-        <input type="checkbox" />
+        <input type="checkbox"/>
         <span></span>
         <span></span>
         <span></span>
@@ -19,7 +20,7 @@
             <a href="/home">
                 <li>Home</li>
             </a>
-            <a href="/myprofile">
+            <a href="/me">
                 <li>My Profile</li>
             </a>
             <a href="xxx.html">
@@ -61,11 +62,50 @@
     </div>
     <div class="container" id="content">
         <div id="stats">
-            <div class="stats-item">
-                Number of Users
+            <!--<div class="stats-item">
+                Warn user:
             </div>
             <div class="stats-item">
-                Number of Posts
+                Delete user/post:
+            </div>-->
+            <div id="stats-users">
+                <div class="stats-item">
+                    Number of Users: ${numberOfUsers}
+                </div>
+                <div class="stats-item">
+                    <c:forEach items="${users}" var="user">
+                        <div class="stats-item-container">
+                            <div class="stats-item-header-left">
+                                <div class="stats-item-header-item">${user.username}</div>
+                                <div class="stats-item-header-item">since: ${user.since.toLocalDate()}</div>
+                                <div class="stats-item-header-item">posts: ${user.posts.size()}</div>
+                                <div class="stats-item-header-right" id="item-in-users">
+                                    <button class="mini-button">Warn</button>
+                                    <button class="mini-button">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </div>
+            <div id="stats-posts">
+                <div class="stats-item">
+                    Number of Posts: ${numberOfPosts}
+                </div>
+                <div class="stats-item">
+                    <c:forEach items="${posts}" var="post">
+                        <div class="stats-item-container">
+                            <div class="stats-item-header-left">
+                                <div class="stats-item-header-item">${post.content}</div>
+                            </div>
+                            <div class="stats-item-header-right">
+                                <button class="mini-button">Warn</button>
+                                <button class="mini-button">Delete</button>
+                            </div>
+
+                        </div>
+                    </c:forEach>
+                </div>
             </div>
         </div>
     </div>

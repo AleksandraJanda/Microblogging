@@ -247,9 +247,6 @@
             margin-bottom: 10px;
         }
 
-        .row {
-            display: block;
-        }
         .post {
             display: inline-block;
             width: 32.5%;
@@ -301,7 +298,7 @@
             width: 100px;
             height: 30px;
             border: none;
-            background-color: rgba(255, 111, 15, 0.8);
+            background-color: rgb(255, 111, 15);
             border-radius: 20px;
             color: rgb(255, 255, 255);
         }
@@ -362,17 +359,78 @@
             color: #ffffff;
         }
 
+        .mini-button{
+            display: inline-block;
+            background-color: rgb(255, 111, 15);
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 11px;
+        }
+
+        /*ADMIN*/
         #stats {
             display: block;
-            margin: 10px;
+            margin: 5px;
             padding: 5px;
         }
 
-        .stats-item {
-            margin: 10px;
-            padding: 5px;
-            border-top: 1px solid rgb(255, 111, 15);
+        #stats-users {
+            float: left;
+            width: 35%;
+            border-right: 1px solid rgb(255, 111, 15);
+        }
 
+        #stats-posts {
+            float: right;
+            width: 65%;
+        }
+
+        .stats-item {
+            display: block;
+            margin: 2px;
+            padding: 2px;
+            /*border-top: 1px solid rgb(255, 111, 15);*/
+        }
+
+        .stats-item-container {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 2px;
+            padding: 2px;
+            border: 1px solid rgb(220, 220, 220);
+            border-radius: 5px;
+        }
+
+        .stats-item-header-left {
+            display: inline-block;
+            margin-bottom: 2px;
+            margin-top: 2px;
+            width: auto;
+            height: auto;
+        }
+
+        .stats-item-header-right {
+            display: inline-block;
+            margin-bottom: 2px;
+            margin-top: 2px;
+            float: right;
+            width: 150px;
+            height: auto;
+        }
+
+        .stats-item-header-item {
+            display: inline-block;
+            padding: 2px;
+        }
+
+        @media screen and (max-width: 1200px){
+            #item-in-users {
+                width: 100%;
+            }
         }
 
         @media screen and (max-width:800px) {
@@ -391,14 +449,29 @@
                 height: auto;
             }
 
-            #add-post, #my-posts {
+            #add-post, #my-posts, #stats-users, #stats-posts {
                 width: 100%;
+            }
+
+            #stats-users {
+                border: none;
+                border-bottom: 1px solid rgb(255, 111, 15);
+            }
+
+            #item-in-users {
+                width: 150px;
             }
         }
         @media screen and (max-width:400px) {
             #panel {
                 width: 100%;
                 float: right;
+            }
+            .stats-item-header-item, .stats-item-header-left, .stats-item-header-right  {
+                width: 100%;
+            }
+            #item-in-users {
+                width: 100%;
             }
         }
     </style>
