@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import pl.janda.microblogging.model.Post;
 import pl.janda.microblogging.model.User;
 import pl.janda.microblogging.repository.PostRepository;
+import pl.janda.microblogging.repository.RoleRepository;
 import pl.janda.microblogging.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
@@ -39,6 +44,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<Post> posts = user.getPosts();
         posts.add(post);
         user.setPosts(posts);
+        userRepository.save(user);
+    }
+
+    public void saveNewUser(String username, String password, String email){
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRole(roleRepository.findRoleByName("ROLE_USER"));
+        user.setSince(LocalDateTime.now());
         userRepository.save(user);
     }
 }

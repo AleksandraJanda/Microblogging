@@ -54,7 +54,7 @@
         </form>
     </div>
     <div class="container" id="content">
-        Wylogowano.
+        User is logged out
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

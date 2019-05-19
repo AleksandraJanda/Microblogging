@@ -55,10 +55,10 @@
     </div>
     <div class="container" id="content">
         <form:form action="/login" method="post" modelAttribute="user">
-            <form:label path="username">Username:</form:label>
+            <form:label class="label" path="username">Username:</form:label>
             <form:input path="username"/>
             <br>
-            <form:label path="password">Password:</form:label>
+            <form:label class="label" path="password">Password:</form:label>
             <form:password path="password"/>
             <br>
             <input id="submit" type="submit" value="Login" />

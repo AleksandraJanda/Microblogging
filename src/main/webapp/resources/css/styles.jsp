@@ -281,13 +281,13 @@
         }
 
         /* login */
-        .label, #username, #password, #submit {
+        .label, #username, #password, #submit, #email{
             display: block;
             margin: 7px;
             font-size: 16px;
         }
 
-        #username, #password {
+        #username, #password, #email {
             display: inline;
             border: none;
             padding: 5px;

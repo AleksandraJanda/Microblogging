@@ -1,6 +1,8 @@
 package pl.janda.microblogging.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ public class MainController {
     @Autowired
     PostsService postsService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     String home(Model model) {
@@ -53,8 +57,19 @@ public class MainController {
     }
 
     @GetMapping("/sign")
-    String sign() {
+    String sign(Model model) {
+        model.addAttribute("user", new User());
+        addUsernameAttribute(model);
         return "sign";
+    }
+
+    @PostMapping("/sign")
+    String signIn(Model model, @ModelAttribute("user") User user){
+        String email = user.getEmail();
+        String username = user.getUsername();
+        String password = passwordEncoder.encode(user.getPassword());
+        userDetailsService.saveNewUser(username,password,email);
+        return "login";
     }
 
     @GetMapping("/me")

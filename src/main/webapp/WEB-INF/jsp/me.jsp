@@ -89,7 +89,15 @@
                             <div class="post-header">
                                 <div class="post-header-item">${post.user.username}</div>
                                 <div class="post-header-item">${post.dateTime.toLocalDate()},
-                                        ${post.dateTime.toLocalTime().getHour()}:${post.dateTime.toLocalTime().getMinute()}
+                                    <c:if test="${post.dateTime.toLocalTime().getHour()<10}">
+                                        0${post.dateTime.toLocalTime().getHour()}</c:if>
+                                    <c:if test="${post.dateTime.toLocalTime().getHour()>=10}">
+                                        ${post.dateTime.toLocalTime().getHour()}</c:if>
+                                    :
+                                    <c:if test="${post.dateTime.toLocalTime().getMinute()<10}">
+                                        0${post.dateTime.toLocalTime().getMinute()}</c:if>
+                                    <c:if test="${post.dateTime.toLocalTime().getMinute()>=10}">
+                                        ${post.dateTime.toLocalTime().getMinute()}</c:if>
                                 </div>
                             </div>
                             <div class="post-content">

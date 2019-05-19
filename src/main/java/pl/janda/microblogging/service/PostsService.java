@@ -24,6 +24,9 @@ public class PostsService {
         post.setUser(user);
         post.setDateTime(LocalDateTime.now());
         postRepository.save(post);
+        if(LocalDateTime.now().toLocalTime().getHour()<10){
+
+        }
     }
 
     public List<Post> findPosts(User user){

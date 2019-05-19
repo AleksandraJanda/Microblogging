@@ -18,6 +18,7 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String email;
     private LocalDateTime since;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,16 +31,18 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, LocalDateTime since, Role role) {
+    public User(String username, String password, String email, LocalDateTime since, Role role) {
         this.username = username;
         this.password = password;
         this.since = since;
         this.role = role;
+        this.email = email;
     }
 
-    public User(String username, String password, LocalDateTime since, Role role, List<Post> posts) {
+    public User(String username, String password, String email, LocalDateTime since, Role role, List<Post> posts) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.since = since;
         this.role = role;
         this.posts = posts;
@@ -67,6 +70,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public LocalDateTime getSince() {

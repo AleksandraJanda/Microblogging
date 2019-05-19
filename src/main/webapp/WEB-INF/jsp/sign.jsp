@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ include file="../../resources/css/styles.jsp"%>
 
 <html>
@@ -60,18 +61,18 @@
         </form>
     </div>
     <div class="container" id="content">
-        <form>
-            <label class="label">
-                Username:
-            </label>
-            <input id="username" type="text" name="username" />
-            <label class="label">
-                Password:
-            </label>
-            <input id="password" type="password" name="password" />
-            <label class="label"></label>
-            <input id="submit" type="submit" value="Login" />
-        </form>
+        <form:form action="/sign" method="post" modelAttribute="user">
+            <form:label class="label" path="email">E-mail:</form:label>
+            <form:input path="email"/>
+            <br>
+            <form:label class="label" path="username">Username:</form:label>
+            <form:input path="username"/>
+            <br>
+            <form:label class="label" path="password">Password:</form:label>
+            <form:password path="password"/>
+            <br>
+            <input id="submit" type="submit" value="Sign In" />
+        </form:form>
     </div>
     <div id="footer">
         <a href="/admin">Admin Panel</a>

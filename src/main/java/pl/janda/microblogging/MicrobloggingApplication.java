@@ -46,10 +46,10 @@ public class MicrobloggingApplication implements CommandLineRunner {
         roleRepository.save(roleUser);
         roleRepository.save(roleAdmin);
 
-        User user1 = new User("user1",passwordEncoder.encode("pass"),LocalDateTime.now(),roleUser);
+        User user1 = new User("user1",passwordEncoder.encode("pass"),"aleksandra_janda@wp.pl",LocalDateTime.now(),roleUser);
         userRepository.save(user1);
 
-        User admin = new User("admin",passwordEncoder.encode("admin"),LocalDateTime.now(),roleAdmin);
+        User admin = new User("admin",passwordEncoder.encode("admin"),"user1@gmail.com",LocalDateTime.now(),roleAdmin);
         userRepository.save(admin);
 
         Post post1 = new Post("Life is pure fun!",LocalDateTime.now().minusDays(10),user1);
