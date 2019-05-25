@@ -401,8 +401,10 @@
             width: 100%;
             margin-bottom: 2px;
             padding: 2px;
+            padding-left: 10px;
             border: 1px solid rgb(220, 220, 220);
             border-radius: 5px;
+            text-align: left;
         }
 
         .stats-item-header-left {

@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import pl.janda.microblogging.model.Post;
 import pl.janda.microblogging.model.User;
 import pl.janda.microblogging.repository.PostRepository;
@@ -16,8 +17,6 @@ import pl.janda.microblogging.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
-import java.util.regex.Pattern;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -65,5 +64,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+    public void addUsernameAttribute(Model model) {
+        model.addAttribute("username", username());
     }
 }

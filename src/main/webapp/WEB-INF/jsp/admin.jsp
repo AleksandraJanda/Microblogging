@@ -62,12 +62,6 @@
     </div>
     <div class="container" id="content">
         <div id="stats">
-            <!--<div class="stats-item">
-                Warn user:
-            </div>
-            <div class="stats-item">
-                Delete user/post:
-            </div>-->
             <div id="stats-users">
                 <div class="stats-item">
                     Number of Users: ${numberOfUsers}
@@ -79,10 +73,10 @@
                                 <div class="stats-item-header-item">${user.username}</div>
                                 <div class="stats-item-header-item">since: ${user.since.toLocalDate()}</div>
                                 <div class="stats-item-header-item">posts: ${user.posts.size()}</div>
-                                <div class="stats-item-header-right" id="item-in-users">
-                                    <button class="mini-button">Warn</button>
-                                    <button class="mini-button">Delete</button>
-                                </div>
+                            </div>
+                            <div class="stats-item-header-right" id="item-in-users">
+                                <button class="mini-button">Warn</button>
+                                <button class="mini-button">Delete</button>
                             </div>
                         </div>
                     </c:forEach>
@@ -95,6 +89,9 @@
                 <div class="stats-item">
                     <c:forEach items="${posts}" var="post">
                         <div class="stats-item-container">
+                            <div class="stats-item-header-left">
+                                <div class="stats-item-header-item">${post.user.username}: </div>
+                            </div>
                             <div class="stats-item-header-left">
                                 <div class="stats-item-header-item">${post.content}</div>
                             </div>

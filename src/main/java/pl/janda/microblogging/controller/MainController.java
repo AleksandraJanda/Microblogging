@@ -22,18 +22,12 @@ public class MainController {
     UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    UserValidation userValidation;
-
-    @Autowired
     PostsService postsService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     String home(Model model) {
         if (!userDetailsService.username().equals("anonymousUser")) {
-            addUsernameAttribute(model);
+            userDetailsService.addUsernameAttribute(model);
             List<Post> posts = postsService.getAllPostsFromWeek();
             posts.sort(Comparator.comparing(Post::getDateTime).reversed());
             model.addAttribute("posts", posts);
@@ -46,116 +40,8 @@ public class MainController {
         return home(model);
     }
 
-    @GetMapping("/login")
-    String login(Model model) {
-        model.addAttribute("user", new User());
-        return "login";
-    }
-
-    @GetMapping("/logout")
-    String logout(Model model) {
-        addUsernameAttribute(model);
-        return "logout";
-    }
-
-    @GetMapping("/sign")
-    String sign(Model model) {
-        model.addAttribute("user", new User());
-        addUsernameAttribute(model);
-        return "sign";
-    }
-
-    @PostMapping("/sign")
-    String signIn(Model model, @ModelAttribute("user") User user) {
-        String email = user.getEmail();
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String passwordConfirm = user.getPasswordConfirm();
-
-        if (userValidation.validateUsername(username)
-                && userValidation.validateEmail(email)
-                && userValidation.validatePassword(password, passwordConfirm)) {
-            userDetailsService.saveNewUser(username, passwordEncoder.encode(password), email);
-            return "login";
-        } else {
-            String info = "";
-            if(!userValidation.validateFields(username,password,passwordConfirm,email)){
-                info = "Please fill all fields";
-            } else if(!userValidation.validateUsername(username)){
-                info = "User with that username is already registered";
-            } else if(!userValidation.validateEmail(email)){
-                info = "Invalid email";
-            } else if(!userValidation.validatePassword(password, passwordConfirm)){
-                info = "Password length has to be greater than 3 characters";
-            }
-            model.addAttribute("info", info);
-            return "sign";
-        }
-    }
-
-    @GetMapping("/me")
-    String me(Model model) {
-        String username = userDetailsService.username();
-
-        User user = (User) userDetailsService.loadUserByUsername(username);
-        LocalDateTime since = user.getSince();
-
-        postsAndAttributes(model, username, user, since);
-        model.addAttribute("new-post", new Post());
-
-        return "me";
-    }
-
-    @PostMapping("/me")
-    String post(Model model, @ModelAttribute("new-post") Post post) {
-        String username = userDetailsService.username();
-
-        User user = (User) userDetailsService.loadUserByUsername(username);
-        LocalDateTime since = user.getSince();
-
-        postsService.savePost(post, user);
-        userDetailsService.saveUserWithPosts(post, user);
-
-        postsAndAttributes(model, username, user, since);
-
-        return "me";
-    }
-
-    @GetMapping("/admin")
-    String admin(Model model) {
-        addUsernameAttribute(model);
-        List<User> users = userDetailsService.getAllUsers();
-        model.addAttribute("numberOfUsers",users.size());
-        List<Post> posts = postsService.getAllPosts();
-        model.addAttribute("numberOfPosts",posts.size());
-        model.addAttribute("users",users);
-        model.addAttribute("posts",posts);
-
-        return "admin";
-    }
-
     @GetMapping("/error")
     String error() {
         return "error";
-    }
-
-    //METHODS
-    private void addUsernameAttribute(Model model) {
-        model.addAttribute("username", userDetailsService.username());
-    }
-
-    private void postsAndAttributes(Model model, String username, User user, LocalDateTime since) {
-        List<Post> posts = postsService.findPosts(user);
-        int postsNumber = 0;
-
-        if (posts != null) {
-            posts.sort(Comparator.comparing(Post::getDateTime).reversed());
-            postsNumber = posts.size();
-        }
-
-        model.addAttribute("posts", posts);
-        model.addAttribute("username", username);
-        model.addAttribute("since", since.toLocalDate());
-        model.addAttribute("postsNumber", postsNumber);
     }
 }
